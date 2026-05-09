@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - Da Morte Para a Vida</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        .qrcode-wrapper {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Acesse o Diagnóstico</h1>
+        <p>Escaneie o QR Code abaixo com a câmera do seu celular para acessar a ferramenta "Da Morte Para a Vida".</p>
+        
+        <div style="text-align: center;">
+            <div id="qrcode-container" class="qrcode-wrapper">
+                <p>Gerando QR Code...</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" class="button button-outline">Voltar ao Início</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadQRCode() {
+            const container = document.getElementById('qrcode-container');
+            try {
+                const response = await fetch('/api/qrcode');
+                if (!response.ok) throw new Error('Falha ao carregar QR Code');
+                
+                const data = await response.json();
+                container.innerHTML = `<img src="${data.qrCode}" alt="QR Code" style="width: 250px; height: 250px;">`;
+            } catch (error) {
+                console.error('Erro:', error);
+                container.innerHTML = '<p style="color: red;">Erro ao carregar o QR Code. Tente novamente mais tarde.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQRCode);
+    </script>
+</body>
+</html>

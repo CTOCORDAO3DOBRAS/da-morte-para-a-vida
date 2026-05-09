@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da Morte Para a Vida — Cordão de 3 Dobras</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body>
+
+<div class="container">
+
+  <!-- TELA 0: BOAS VINDAS -->
+  <div class="screen active" id="screen-0">
+    <div class="hero">
+      <span class="hero-cross">✦ † ✦</span>
+      <h1>Da Morte<br><em>Para a Vida</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Cordão de 3 Dobras Editora</p>
+      <p class="hero-desc">Um diagnóstico honesto e profundo para quem decidiu parar de viver no automático e encontrar o seu verdadeiro propósito em Deus.</p>
+    </div>
+    <div class="section-gap">
+      <div class="question-card" style="text-align:center;">
+        <p class="q-text" style="font-size:18px;margin-bottom:12px;">"Será que o que estou fazendo hoje tem me levado a cumprir o meu propósito de vida na Terra?"</p>
+        <p style="font-size:13px;color:rgba(201,168,76,0.6);letter-spacing:2px;">— Daniel de Mattos, 06/05/2026</p>
+      </div>
+      <p style="text-align:center;font-size:13px;color:rgba(245,240,232,0.5);margin-bottom:24px;line-height:1.8;">
+        Este questionário é anônimo, ético e foi criado para ir onde nenhuma autoajuda vai.<br>
+        Não existem respostas certas ou erradas — apenas a sua verdade.
+      </p>
+      <button class="btn-primary" onclick="goTo('screen-1')">Quero descobrir meu perfil →</button>
+    </div>
+    <div class="rodape-editorial">
+      <p>Cordão de 3 Dobras Editora<br>Edições Cristãs — Fortalecendo Alianças<br>Conteúdo proprietário de Daniel de Mattos</p>
+    </div>
+  </div>
+
+  <!-- TELA 1: EIXO 1 — O PAPAI -->
+  <div class="screen" id="screen-1">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:5%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">1</span>
+        <span class="eixo-titulo">O PAPAI, Jesus Cristo e o Espírito Santo</span>
+      </div>
+    </div>
+    <div class="section-gap">
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 01 de 15</p>
+        <p class="q-text">Quando você acorda, qual é o seu primeiro pensamento — e Ele está nele?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q1')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">5</button>
+        </div>
+        <div class="scale-labels"><span>Nunca penso nEle</span><span>Sempre está comigo</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 02 de 15</p>
+        <p class="q-text">Você ora ou apenas pede? Há diferença prática na sua vida entre os dois?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q2')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só peço nas crises</span><span>Tenho comunhão real</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 03 de 15</p>
+        <p class="q-text">Quando tudo vai bem, você ainda busca O PAPAI ou só O busca na crise?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q3')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só nas crises</span><span>Em todo tempo</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 04 de 15</p>
+        <p class="q-text">O Espírito Santo já te disse algo que você ignorou deliberadamente? O que aconteceu depois?</p>
+        <textarea class="q-textarea" id="q4" placeholder="Escreva com honestidade. Ninguém vai te julgar aqui..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 05 de 15</p>
+        <p class="q-text">Se O PAPAI te fizesse uma pergunta hoje, qual você teria mais medo de responder?</p>
+        <textarea class="q-textarea" id="q5" placeholder="A resposta que você nunca deu para ninguém..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goToEixo2()">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 2: BIFURCAÇÃO -->
+  <div class="screen" id="screen-2">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Relacionamento e Aliança</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card" style="text-align:center;">
+        <p class="q-text" style="margin-bottom:28px;">Para que possamos calibrar as perguntas certas para você, precisamos saber:</p>
+        <div class="bifurcacao">
+          <button class="bifurcacao-btn" onclick="selectBifur('casado')">Sou casado(a)</button>
+          <button class="bifurcacao-btn" onclick="selectBifur('solteiro')">Não sou casado(a)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA 3A: CASADO -->
+  <div class="screen" id="screen-3a">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Sua Aliança Matrimonial</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 06 de 15</p>
+        <p class="q-text">Seu cônjuge conhece o ser humano real que você é, ou conhece a versão que você permite que ele(a) veja?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q6')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só a versão editada</span><span>Me conhece de verdade</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 07 de 15</p>
+        <p class="q-text">Quando foi a última vez que você surpreendeu seu cônjuge sem nenhum motivo externo?</p>
+        <textarea class="q-textarea" id="q7" placeholder="Seja honesto(a). Não precisa ser bonito..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 08 de 15</p>
+        <p class="q-text">Seu cônjuge conseguiria descrever o seu propósito de vida com as próprias palavras?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q8')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">5</button>
+        </div>
+        <div class="scale-labels"><span>Nunca conversamos sobre isso</span><span>Sabe melhor que eu</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 09 de 15</p>
+        <p class="q-text">O que você tem exigido do seu cônjuge que você mesmo(a) não tem entregado?</p>
+        <textarea class="q-textarea" id="q9" placeholder="A resposta mais difícil é sempre a mais importante..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 10 de 15</p>
+        <p class="q-text">Se seu cônjuge te descrevesse para seus filhos daqui a 20 anos, o que você quer que ele(a) diga?</p>
+        <textarea class="q-textarea" id="q10" placeholder="Escreva o legado que quer deixar..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-4')">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 3B: SOLTEIRO -->
+  <div class="screen" id="screen-3b">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Relacionamento e Preparação</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 06 de 15</p>
+        <p class="q-text">O que você ainda não resolveu em si mesmo que impede uma entrega real a outra pessoa?</p>
+        <textarea class="q-textarea" id="q6b" placeholder="Seja honesto(a) consigo mesmo..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 07 de 15</p>
+        <p class="q-text">Você busca um(a) parceiro(a) ou busca uma audiência para a sua vida?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">5</button>
+        </div>
+        <div class="scale-labels"><span>Busco validação</span><span>Busco parceria real</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 08–10 de 15</p>
+        <p class="q-text">O que seu relacionamento com O PAPAI tem te revelado sobre quem você precisa ser antes de unir sua vida a alguém?</p>
+        <textarea class="q-textarea" id="q8b" placeholder="O que o Espírito Santo já te mostrou sobre isso?"></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-4')">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 4: EIXO 3 — SUPERPODER -->
+  <div class="screen" id="screen-4">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">3</span>
+        <span class="eixo-titulo">O Seu Superpoder Escondido</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 11 de 15</p>
+        <p class="q-text">O que você faz que o tempo passa e você não percebe?</p>
+        <textarea class="q-textarea" id="q11" placeholder="Pode ser algo simples, algo que você nem considera especial..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 12 de 15</p>
+        <p class="q-text">Pelo que as pessoas te pedem ajuda mesmo sem você se oferecer?</p>
+        <textarea class="q-textarea" id="q12" placeholder="O que as pessoas reconhecem em você antes de você mesmo..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 13 de 15</p>
+        <p class="q-text">Se dinheiro não existisse e você precisasse contribuir com o mundo de alguma forma, o que seria?</p>
+        <textarea class="q-textarea" id="q13" placeholder="Retire o dinheiro da equação e veja o que sobra..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 14 de 15</p>
+        <p class="q-text">Qual foi o momento da sua vida em que você se sentiu mais <em>vivo</em> — não mais feliz, mais <strong>VIVO</strong>?</p>
+        <textarea class="q-textarea" id="q14" placeholder="Descreva esse momento com o máximo de detalhes..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 15 de 15</p>
+        <p class="q-text">O que você leva para o túmulo se não agir até o fim da sua vida?</p>
+        <textarea class="q-textarea" id="q15" placeholder="O cemitério está cheio de livros não escritos, músicas não compostas, vidas não vividas..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-5')">Ver meu Termo e Diagnóstico →</button>
+    </div>
+  </div>
+
+  <!-- TELA 5: TERMO -->
+  <div class="screen" id="screen-5">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+    </div>
+    <div class="section-gap">
+      <div class="termo-box">
+        <h3>Termo de Uso e Consentimento Anônimo</h3>
+        <p>
+          Ao prosseguir, você declara compreender e concordar que:<br><br>
+          <strong>1. Anonimato Total:</strong> Nenhuma informação que te identifique pessoalmente será coletada, armazenada ou divulgada. Este questionário não solicita nome, e-mail, telefone ou qualquer dado pessoal.<br><br>
+          <strong>2. Uso Científico e Editorial:</strong> As respostas anônimas poderão ser utilizadas de forma agregada para pesquisa, publicações e desenvolvimento de conteúdo pela Cordão de 3 Dobras Editora, sempre preservando o anonimato absoluto.<br><br>
+          <strong>3. Propósito Declarado:</strong> Este diagnóstico tem finalidade exclusivamente reflexiva e espiritual. Não substitui acompanhamento profissional de saúde mental ou aconselhamento pastoral.<br><br>
+          <strong>4. Propriedade Intelectual:</strong> O sistema de perfis, questionário e metodologia são propriedade intelectual de Daniel de Mattos e Cordão de 3 Dobras Editora, protegidos por direitos autorais.
+        </p>
+        <label class="termo-check">
+          <input type="checkbox" id="termo-aceite" onchange="checkTermo()">
+          <span>Li, compreendi e concordo com os termos acima. Quero prosseguir para o meu diagnóstico.</span>
+        </label>
+      </div>
+      <button class="btn-primary" id="btn-diagnostico" onclick="gerarDiagnostico()" disabled style="opacity:0.4;cursor:not-allowed;">
+        Gerar meu Diagnóstico →
+      </button>
+    </div>
+  </div>
+
+  <!-- TELA 6: RESULTADO -->
+  <div class="screen" id="screen-6">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="section-gap">
+      <div class="perfil-badge">
+        <span class="perfil-icon" id="result-icon">🌱</span>
+        <p class="perfil-subtitulo">Seu perfil é</p>
+        <h2 class="perfil-nome" id="result-nome">O Desperto</h2>
+        <p class="perfil-desc" id="result-desc">Você já teve o momento de ruptura. A madrugada que mudou tudo. Agora está entre o casulo e o voo — e essa é a posição mais corajosa de todas.</p>
+      </div>
+
+      <div class="eixos-grid">
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">O Papai</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-1" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-1-num">—</p>
+        </div>
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">Aliança</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-2" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-2-num">—</p>
+        </div>
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">Propósito</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-3" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-3-num">—</p>
+        </div>
+      </div>
+
+      <div class="proximos-passos" id="proximos-container">
+        <h3>Seus próximos passos</h3>
+        <div id="passos-lista"></div>
+      </div>
+
+      <div class="question-card" style="text-align:center;margin-top:32px;">
+        <p class="q-text" style="font-size:17px;margin-bottom:8px;">"Ainda há tempo para mim e para você."</p>
+        <p style="font-size:12px;color:rgba(201,168,76,0.5);letter-spacing:2px;">— Daniel de Mattos</p>
+      </div>
+
+      <button class="btn-primary" onclick="compartilhar()">Compartilhar minha jornada</button>
+      <button class="btn-secondary" onclick="reiniciar()">Refazer o diagnóstico</button>
+    </div>
+
+    <div class="rodape-editorial">
+      <p>Cordão de 3 Dobras Editora<br>Edições Cristãs — Fortalecendo Alianças<br>Conteúdo proprietário de Daniel de Mattos — Todos os direitos reservados</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script src="scripts/app.js"></script>
+
+</body>
+</html>

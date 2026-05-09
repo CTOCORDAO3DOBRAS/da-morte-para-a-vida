@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin — Da Morte Para a Vida</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ouro: #c9a84c;
+    --ouro-escuro: #8B6914;
+    --azul-noite: #0d1b2e;
+    --creme: #f5f0e8;
+    --branco: #fdfbf7;
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--azul-noite);
+    color: var(--creme);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* LOGIN SCREEN */
+  #login-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
+  .login-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  .login-card h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: var(--ouro);
+    margin-bottom: 24px;
+  }
+  .login-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    color: var(--creme);
+    outline: none;
+  }
+  .login-card input:focus {
+    border-color: var(--ouro);
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--ouro-escuro), var(--ouro));
+    color: var(--azul-noite);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+  }
+
+  /* DASHBOARD SCREEN */
+  #dashboard-screen {
+    display: none;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: var(--ouro);
+  }
+  .btn-outline {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--ouro);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .btn-outline:hover {
+    background: rgba(201,168,76,0.1);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .metric-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .metric-card h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 12px;
+  }
+  .metric-card .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: var(--ouro);
+  }
+
+  .table-container {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    overflow-x: auto;
+    padding: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  th {
+    color: var(--ouro);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+  }
+  .respostas-btn {
+    background: rgba(201,168,76,0.1);
+    color: var(--ouro);
+    border: 1px solid var(--ouro);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+  .respostas-btn:hover {
+    background: var(--ouro);
+    color: var(--azul-noite);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 27, 46, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  .modal-content {
+    background: var(--azul-noite);
+    border: 1px solid var(--ouro);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+  }
+  .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--ouro);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .qa-block {
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 12px;
+  }
+  .qa-q {
+    font-size: 11px;
+    color: var(--ouro);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .qa-a {
+    font-size: 14px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--creme);
+    white-space: pre-wrap;
+  }
+
+  @media (max-width: 768px) {
+    .grid-4, .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- TELA DE LOGIN -->
+  <div id="login-screen" class="container">
+    <div class="login-card">
+      <h1>Dashboard Admin</h1>
+      <input type="password" id="api-key" placeholder="Digite a Chave Secreta">
+      <button class="btn-primary" onclick="fazerLogin()">Acessar Métricas</button>
+      <p id="login-error" style="color: #e74c3c; font-size: 13px; margin-top: 16px; display: none;">Chave inválida. Tente novamente.</p>
+    </div>
+  </div>
+
+  <!-- TELA DO DASHBOARD -->
+  <div id="dashboard-screen" class="container">
+    <header>
+      <h1>Métricas — Da Morte Para a Vida</h1>
+      <button class="btn-outline" onclick="fazerLogout()">Sair</button>
+    </header>
+
+    <div class="grid-2">
+      <div class="metric-card">
+        <h3>Total de Diagnósticos Realizados</h3>
+        <div class="val" id="val-total">0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Estado Civil</h3>
+        <div style="display:flex;justify-content:space-around;margin-top:10px;">
+          <div><span style="font-size:12px;color:gray;">Casados:</span> <span class="val" id="val-casados" style="font-size:24px;">0</span></div>
+          <div><span style="font-size:12px;color:gray;">Solteiros:</span> <span class="val" id="val-solteiros" style="font-size:24px;">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-4">
+      <div class="metric-card">
+        <h3>Adormecido</h3>
+        <div class="val" id="val-adormecido">0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Desperto</h3>
+        <div class="val" id="val-desperto">0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Caminhante</h3>
+        <div class="val" id="val-caminhante">0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Edificador</h3>
+        <div class="val" id="val-edificador">0</div>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Cormorant Garamond',serif; color:var(--ouro); font-weight:400; margin-bottom:16px;">Diagnósticos Recentes</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Perfil Resultado</th>
+            <th>Estado Civil</th>
+            <th>Pontuação (Eixos 1/2/3)</th>
+            <th>Respostas Abertas</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Renderizado via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MODAL DE RESPOSTAS -->
+  <div class="modal-overlay" id="modal-respostas">
+    <div class="modal-content">
+      <button class="close-modal" onclick="fecharModal()">✕</button>
+      <h2 style="font-family:'Cormorant Garamond',serif; color:var(--ouro); margin-bottom:24px; font-weight:400;">Respostas do Diagnóstico</h2>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    let globalData = [];
+
+    async function fazerLogin() {
+      const apiKey = document.getElementById('api-key').value.trim();
+      if (!apiKey) return;
+
+      const btn = document.querySelector('.login-card button');
+      btn.innerHTML = 'Verificando...';
+      document.getElementById('login-error').style.display = 'none';
+
+      try {
+        const url = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                  ? 'http://localhost:3000/api/dashboard/metricas' 
+                  : '/api/dashboard/metricas';
+                  
+        const res = await fetch(url, {
+          headers: { 'x-api-key': apiKey }
+        });
+
+        if (!res.ok) throw new Error('Chave inválida');
+
+        const data = await res.json();
+        
+        // Sucesso: Salvar chave no sessionStorage e renderizar
+        sessionStorage.setItem('adminApiKey', apiKey);
+        renderizarDashboard(data);
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard-screen').style.display = 'block';
+      } catch (err) {
+        document.getElementById('login-error').style.display = 'block';
+      } finally {
+        btn.innerHTML = 'Acessar Métricas';
+      }
+    }
+
+    function fazerLogout() {
+      sessionStorage.removeItem('adminApiKey');
+      document.getElementById('api-key').value = '';
+      document.getElementById('dashboard-screen').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+    }
+
+    function renderizarDashboard(data) {
+      document.getElementById('val-total').textContent = data.total;
+      document.getElementById('val-casados').textContent = data.demografia.casados;
+      document.getElementById('val-solteiros').textContent = data.demografia.solteiros;
+
+      document.getElementById('val-adormecido').textContent = data.perfis['O Adormecido'] || 0;
+      document.getElementById('val-desperto').textContent = data.perfis['O Desperto'] || 0;
+      document.getElementById('val-caminhante').textContent = data.perfis['O Caminhante'] || 0;
+      document.getElementById('val-edificador').textContent = data.perfis['O Edificador'] || 0;
+
+      globalData = data.raw;
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      // Ordenar por data decrescente
+      const sortedData = globalData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      sortedData.forEach((item, index) => {
+        const date = new Date(item.created_at).toLocaleString('pt-BR');
+        const estadoCivil = item.casado === null ? 'Não Informado' : (item.casado ? 'Casado(a)' : 'Solteiro(a)');
+        const pontuacao = `${item.pontuacao_eixo1}% / ${item.pontuacao_eixo2}% / ${item.pontuacao_eixo3}%`;
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${date}</td>
+          <td style="color:var(--ouro); font-weight:600;">${item.perfil_resultado}</td>
+          <td>${estadoCivil}</td>
+          <td>${pontuacao}</td>
+          <td><button class="respostas-btn" onclick="verRespostas(${index})">Ver Textos</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function verRespostas(index) {
+      const item = globalData[index];
+      const textos = item.respostas?.textos || {};
+      const body = document.getElementById('modal-body');
+      body.innerHTML = '';
+
+      const perguntas = {
+        'q4': 'O Espírito Santo já te disse algo que você ignorou deliberadamente?',
+        'q5': 'Se O PAPAI te fizesse uma pergunta hoje, qual você teria mais medo de responder?',
+        'q7': 'Quando foi a última vez que você surpreendeu seu cônjuge?',
+        'q9': 'O que você tem exigido do seu cônjuge que você não tem entregado?',
+        'q10': 'Se seu cônjuge te descrevesse para seus filhos daqui a 20 anos, o que você quer que ele diga?',
+        'q6b': 'O que você ainda não resolveu em si mesmo que impede uma entrega real a outra pessoa?',
+        'q8b': 'O que seu relacionamento com O PAPAI tem te revelado sobre você mesmo?',
+        'q11': 'O que você faz que o tempo passa e você não percebe?',
+        'q12': 'Pelo que as pessoas te pedem ajuda mesmo sem você se oferecer?',
+        'q13': 'Se dinheiro não existisse, como você contribuiria com o mundo?',
+        'q14': 'Qual foi o momento da sua vida em que você se sentiu mais vivo?',
+        'q15': 'O que você leva para o túmulo se não agir até o fim da sua vida?'
+      };
+
+      let temConteudo = false;
+      for (const [key, value] of Object.entries(textos)) {
+        if (value && value.trim() !== '') {
+          temConteudo = true;
+          body.innerHTML += `
+            <div class="qa-block">
+              <div class="qa-q">${perguntas[key] || key}</div>
+              <div class="qa-a">${value}</div>
+            </div>
+          `;
+        }
+      }
+
+      if (!temConteudo) {
+        body.innerHTML = '<p style="color:gray;">Nenhum texto aberto foi preenchido neste diagnóstico.</p>';
+      }
+
+      document.getElementById('modal-respostas').style.display = 'flex';
+    }
+
+    function fecharModal() {
+      document.getElementById('modal-respostas').style.display = 'none';
+    }
+
+    // Auto-login se chave já estiver salva
+    window.onload = () => {
+      const savedKey = sessionStorage.getItem('adminApiKey');
+      if (savedKey) {
+        document.getElementById('api-key').value = savedKey;
+        fazerLogin();
+      }
+    };
+  </script>
+</body>
+</html>

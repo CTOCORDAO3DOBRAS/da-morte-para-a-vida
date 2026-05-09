@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da Morte Para a Vida — Cordão de 3 Dobras</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ouro: #c9a84c;
+    --ouro-escuro: #8B6914;
+    --vinho: #6b1f2a;
+    --azul-noite: #0d1b2e;
+    --azul-medio: #1a2f4a;
+    --creme: #f5f0e8;
+    --branco: #fdfbf7;
+    --texto: #1a1208;
+    --texto-suave: #5a4a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--azul-noite);
+    color: var(--creme);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      radial-gradient(1px 1px at 10% 20%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 10%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 40%, rgba(201,168,76,0.25) 0%, transparent 100%),
+      radial-gradient(2px 2px at 20% 90%, rgba(201,168,76,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 50%, rgba(201,168,76,0.15) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+  }
+
+  .hero-cross {
+    font-size: 28px;
+    color: var(--ouro);
+    margin-bottom: 20px;
+    display: block;
+    letter-spacing: 8px;
+    opacity: 0.8;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 8vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--branco);
+    letter-spacing: -1px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--ouro);
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+    margin: 24px auto;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.7);
+  }
+
+  .hero-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,0.75);
+    max-width: 560px;
+    margin: 20px auto 0;
+    line-height: 1.7;
+  }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* PROGRESS */
+  .progress-bar {
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    height: 3px;
+    margin: 0 auto 40px;
+    max-width: 500px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro));
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  }
+
+  .eixo-label {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .eixo-numero {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--ouro);
+    border-radius: 50%;
+    line-height: 34px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ouro);
+    margin-bottom: 10px;
+  }
+  .eixo-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ouro);
+    display: block;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ouro);
+    opacity: 0.6;
+    margin-bottom: 14px;
+  }
+
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--branco);
+    margin-bottom: 24px;
+  }
+
+  .q-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--creme);
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.3s;
+    line-height: 1.6;
+  }
+  .q-textarea:focus { border-color: var(--ouro); }
+  .q-textarea::placeholder { color: rgba(245,240,232,0.3); }
+
+  /* Bifurcação */
+  .bifurcacao {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .bifurcacao-btn {
+    flex: 1;
+    min-width: 160px;
+    padding: 18px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    color: var(--creme);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .bifurcacao-btn:hover, .bifurcacao-btn.selected {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--ouro);
+    color: var(--ouro);
+  }
+
+  /* SCALE */
+  .scale-options {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .scale-btn {
+    flex: 1;
+    padding: 14px 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    color: rgba(245,240,232,0.6);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .scale-btn:hover, .scale-btn.selected {
+    background: rgba(201,168,76,0.2);
+    border-color: var(--ouro);
+    color: var(--ouro);
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 10px;
+    color: rgba(245,240,232,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, var(--ouro-escuro), var(--ouro));
+    color: var(--azul-noite);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.3);
+  }
+  .btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 14px 32px;
+    background: transparent;
+    color: rgba(201,168,76,0.6);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 12px;
+  }
+  .btn-secondary:hover { border-color: var(--ouro); color: var(--ouro); }
+
+  /* TERMO */
+  .termo-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.8);
+  }
+  .termo-box h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ouro);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .termo-check {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 24px;
+    cursor: pointer;
+  }
+  .termo-check input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--ouro);
+    cursor: pointer;
+  }
+  .termo-check span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: rgba(245,240,232,0.7);
+  }
+
+  /* RESULTADO */
+  .perfil-badge {
+    text-align: center;
+    padding: 48px 20px;
+  }
+  .perfil-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    display: block;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .perfil-nome {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ouro);
+    margin-bottom: 8px;
+  }
+  .perfil-subtitulo {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 32px;
+  }
+  .perfil-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.85);
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  .eixos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .eixo-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .eixo-card-titulo {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .eixo-score-bar {
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    height: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .eixo-score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro));
+    border-radius: 100px;
+    transition: width 1s cubic-bezier(.4,0,.2,1) 0.5s;
+  }
+  .eixo-score-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ouro);
+  }
+
+  .proximos-passos {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin: 24px 0;
+    text-align: left;
+  }
+  .proximos-passos h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ouro);
+    margin-bottom: 20px;
+  }
+  .passo {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    align-items: flex-start;
+  }
+  .passo-num {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--ouro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ouro);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .passo-texto {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(245,240,232,0.85);
+  }
+
+  .rodape-editorial {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    margin-top: 40px;
+  }
+  .rodape-editorial p {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.4);
+    line-height: 2;
+  }
+
+  .section-gap { padding: 0 0 40px; }
+
+  @media (max-width: 600px) {
+    .question-card { padding: 24px 20px; }
+    .eixos-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 38px; }
+    .bifurcacao { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- TELA 0: BOAS VINDAS -->
+  <div class="screen active" id="screen-0">
+    <div class="hero">
+      <span class="hero-cross">✦ † ✦</span>
+      <h1>Da Morte<br><em>Para a Vida</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Cordão de 3 Dobras Editora</p>
+      <p class="hero-desc">Um diagnóstico honesto e profundo para quem decidiu parar de viver no automático e encontrar o seu verdadeiro propósito em Deus.</p>
+    </div>
+    <div class="section-gap">
+      <div class="question-card" style="text-align:center;">
+        <p class="q-text" style="font-size:18px;margin-bottom:12px;">"Será que o que estou fazendo hoje tem me levado a cumprir o meu propósito de vida na Terra?"</p>
+        <p style="font-size:13px;color:rgba(201,168,76,0.6);letter-spacing:2px;">— Daniel de Mattos, 06/05/2026</p>
+      </div>
+      <p style="text-align:center;font-size:13px;color:rgba(245,240,232,0.5);margin-bottom:24px;line-height:1.8;">
+        Este questionário é anônimo, ético e foi criado para ir onde nenhuma autoajuda vai.<br>
+        Não existem respostas certas ou erradas — apenas a sua verdade.
+      </p>
+      <button class="btn-primary" onclick="goTo('screen-1')">Quero descobrir meu perfil →</button>
+    </div>
+    <div class="rodape-editorial">
+      <p>Cordão de 3 Dobras Editora<br>Edições Cristãs — Fortalecendo Alianças<br>Conteúdo proprietário de Daniel de Mattos</p>
+    </div>
+  </div>
+
+  <!-- TELA 1: EIXO 1 — O PAPAI -->
+  <div class="screen" id="screen-1">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:5%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">1</span>
+        <span class="eixo-titulo">O PAPAI, Jesus Cristo e o Espírito Santo</span>
+      </div>
+    </div>
+    <div class="section-gap">
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 01 de 15</p>
+        <p class="q-text">Quando você acorda, qual é o seu primeiro pensamento — e Ele está nele?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q1')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q1')">5</button>
+        </div>
+        <div class="scale-labels"><span>Nunca penso nEle</span><span>Sempre está comigo</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 02 de 15</p>
+        <p class="q-text">Você ora ou apenas pede? Há diferença prática na sua vida entre os dois?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q2')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q2')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só peço nas crises</span><span>Tenho comunhão real</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 03 de 15</p>
+        <p class="q-text">Quando tudo vai bem, você ainda busca O PAPAI ou só O busca na crise?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q3')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q3')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só nas crises</span><span>Em todo tempo</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 04 de 15</p>
+        <p class="q-text">O Espírito Santo já te disse algo que você ignorou deliberadamente? O que aconteceu depois?</p>
+        <textarea class="q-textarea" id="q4" placeholder="Escreva com honestidade. Ninguém vai te julgar aqui..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 05 de 15</p>
+        <p class="q-text">Se O PAPAI te fizesse uma pergunta hoje, qual você teria mais medo de responder?</p>
+        <textarea class="q-textarea" id="q5" placeholder="A resposta que você nunca deu para ninguém..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goToEixo2()">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 2: BIFURCAÇÃO -->
+  <div class="screen" id="screen-2">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Relacionamento e Aliança</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card" style="text-align:center;">
+        <p class="q-text" style="margin-bottom:28px;">Para que possamos calibrar as perguntas certas para você, precisamos saber:</p>
+        <div class="bifurcacao">
+          <button class="bifurcacao-btn" onclick="selectBifur('casado')">Sou casado(a)</button>
+          <button class="bifurcacao-btn" onclick="selectBifur('solteiro')">Não sou casado(a)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA 3A: CASADO -->
+  <div class="screen" id="screen-3a">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Sua Aliança Matrimonial</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 06 de 15</p>
+        <p class="q-text">Seu cônjuge conhece o ser humano real que você é, ou conhece a versão que você permite que ele(a) veja?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q6')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q6')">5</button>
+        </div>
+        <div class="scale-labels"><span>Só a versão editada</span><span>Me conhece de verdade</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 07 de 15</p>
+        <p class="q-text">Quando foi a última vez que você surpreendeu seu cônjuge sem nenhum motivo externo?</p>
+        <textarea class="q-textarea" id="q7" placeholder="Seja honesto(a). Não precisa ser bonito..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 08 de 15</p>
+        <p class="q-text">Seu cônjuge conseguiria descrever o seu propósito de vida com as próprias palavras?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q8')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q8')">5</button>
+        </div>
+        <div class="scale-labels"><span>Nunca conversamos sobre isso</span><span>Sabe melhor que eu</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 09 de 15</p>
+        <p class="q-text">O que você tem exigido do seu cônjuge que você mesmo(a) não tem entregado?</p>
+        <textarea class="q-textarea" id="q9" placeholder="A resposta mais difícil é sempre a mais importante..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 10 de 15</p>
+        <p class="q-text">Se seu cônjuge te descrevesse para seus filhos daqui a 20 anos, o que você quer que ele(a) diga?</p>
+        <textarea class="q-textarea" id="q10" placeholder="Escreva o legado que quer deixar..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-4')">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 3B: SOLTEIRO -->
+  <div class="screen" id="screen-3b">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">2</span>
+        <span class="eixo-titulo">Relacionamento e Preparação</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 06 de 15</p>
+        <p class="q-text">O que você ainda não resolveu em si mesmo que impede uma entrega real a outra pessoa?</p>
+        <textarea class="q-textarea" id="q6b" placeholder="Seja honesto(a) consigo mesmo..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 07 de 15</p>
+        <p class="q-text">Você busca um(a) parceiro(a) ou busca uma audiência para a sua vida?</p>
+        <div class="scale-options">
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">1</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">2</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">3</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">4</button>
+          <button class="scale-btn" onclick="selectScale(this,'q7b')">5</button>
+        </div>
+        <div class="scale-labels"><span>Busco validação</span><span>Busco parceria real</span></div>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 08–10 de 15</p>
+        <p class="q-text">O que seu relacionamento com O PAPAI tem te revelado sobre quem você precisa ser antes de unir sua vida a alguém?</p>
+        <textarea class="q-textarea" id="q8b" placeholder="O que o Espírito Santo já te mostrou sobre isso?"></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-4')">Próximo Eixo →</button>
+    </div>
+  </div>
+
+  <!-- TELA 4: EIXO 3 — SUPERPODER -->
+  <div class="screen" id="screen-4">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+      <div class="eixo-label">
+        <span class="eixo-numero">3</span>
+        <span class="eixo-titulo">O Seu Superpoder Escondido</span>
+      </div>
+    </div>
+    <div class="section-gap">
+      <div class="question-card">
+        <p class="q-number">Pergunta 11 de 15</p>
+        <p class="q-text">O que você faz que o tempo passa e você não percebe?</p>
+        <textarea class="q-textarea" id="q11" placeholder="Pode ser algo simples, algo que você nem considera especial..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 12 de 15</p>
+        <p class="q-text">Pelo que as pessoas te pedem ajuda mesmo sem você se oferecer?</p>
+        <textarea class="q-textarea" id="q12" placeholder="O que as pessoas reconhecem em você antes de você mesmo..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 13 de 15</p>
+        <p class="q-text">Se dinheiro não existisse e você precisasse contribuir com o mundo de alguma forma, o que seria?</p>
+        <textarea class="q-textarea" id="q13" placeholder="Retire o dinheiro da equação e veja o que sobra..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 14 de 15</p>
+        <p class="q-text">Qual foi o momento da sua vida em que você se sentiu mais <em>vivo</em> — não mais feliz, mais <strong>VIVO</strong>?</p>
+        <textarea class="q-textarea" id="q14" placeholder="Descreva esse momento com o máximo de detalhes..."></textarea>
+      </div>
+
+      <div class="question-card">
+        <p class="q-number">Pergunta 15 de 15</p>
+        <p class="q-text">O que você leva para o túmulo se não agir até o fim da sua vida?</p>
+        <textarea class="q-textarea" id="q15" placeholder="O cemitério está cheio de livros não escritos, músicas não compostas, vidas não vividas..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-5')">Ver meu Termo e Diagnóstico →</button>
+    </div>
+  </div>
+
+  <!-- TELA 5: TERMO -->
+  <div class="screen" id="screen-5">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+    </div>
+    <div class="section-gap">
+      <div class="termo-box">
+        <h3>Termo de Uso e Consentimento Anônimo</h3>
+        <p>
+          Ao prosseguir, você declara compreender e concordar que:<br><br>
+          <strong>1. Anonimato Total:</strong> Nenhuma informação que te identifique pessoalmente será coletada, armazenada ou divulgada. Este questionário não solicita nome, e-mail, telefone ou qualquer dado pessoal.<br><br>
+          <strong>2. Uso Científico e Editorial:</strong> As respostas anônimas poderão ser utilizadas de forma agregada para pesquisa, publicações e desenvolvimento de conteúdo pela Cordão de 3 Dobras Editora, sempre preservando o anonimato absoluto.<br><br>
+          <strong>3. Propósito Declarado:</strong> Este diagnóstico tem finalidade exclusivamente reflexiva e espiritual. Não substitui acompanhamento profissional de saúde mental ou aconselhamento pastoral.<br><br>
+          <strong>4. Propriedade Intelectual:</strong> O sistema de perfis, questionário e metodologia são propriedade intelectual de Daniel de Mattos e Cordão de 3 Dobras Editora, protegidos por direitos autorais.
+        </p>
+        <label class="termo-check">
+          <input type="checkbox" id="termo-aceite" onchange="checkTermo()">
+          <span>Li, compreendi e concordo com os termos acima. Quero prosseguir para o meu diagnóstico.</span>
+        </label>
+      </div>
+      <button class="btn-primary" id="btn-diagnostico" onclick="gerarDiagnostico()" disabled style="opacity:0.4;cursor:not-allowed;">
+        Gerar meu Diagnóstico →
+      </button>
+    </div>
+  </div>
+
+  <!-- TELA 6: RESULTADO -->
+  <div class="screen" id="screen-6">
+    <div class="hero" style="padding:40px 20px 20px;">
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="section-gap">
+      <div class="perfil-badge">
+        <span class="perfil-icon" id="result-icon">🌱</span>
+        <p class="perfil-subtitulo">Seu perfil é</p>
+        <h2 class="perfil-nome" id="result-nome">O Desperto</h2>
+        <p class="perfil-desc" id="result-desc">Você já teve o momento de ruptura. A madrugada que mudou tudo. Agora está entre o casulo e o voo — e essa é a posição mais corajosa de todas.</p>
+      </div>
+
+      <div class="eixos-grid">
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">O Papai</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-1" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-1-num">—</p>
+        </div>
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">Aliança</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-2" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-2-num">—</p>
+        </div>
+        <div class="eixo-card">
+          <p class="eixo-card-titulo">Propósito</p>
+          <div class="eixo-score-bar"><div class="eixo-score-fill" id="score-3" style="width:0%"></div></div>
+          <p class="eixo-score-num" id="score-3-num">—</p>
+        </div>
+      </div>
+
+      <div class="proximos-passos" id="proximos-container">
+        <h3>Seus próximos passos</h3>
+        <div id="passos-lista"></div>
+      </div>
+
+      <div class="question-card" style="text-align:center;margin-top:32px;">
+        <p class="q-text" style="font-size:17px;margin-bottom:8px;">"Ainda há tempo para mim e para você."</p>
+        <p style="font-size:12px;color:rgba(201,168,76,0.5);letter-spacing:2px;">— Daniel de Mattos</p>
+      </div>
+
+      <button class="btn-primary" onclick="compartilhar()">Compartilhar minha jornada</button>
+      <button class="btn-secondary" onclick="reiniciar()">Refazer o diagnóstico</button>
+    </div>
+
+    <div class="rodape-editorial">
+      <p>Cordão de 3 Dobras Editora<br>Edições Cristãs — Fortalecendo Alianças<br>Conteúdo proprietário de Daniel de Mattos — Todos os direitos reservados</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // STATE
+  const state = {
+    scores: { q1:0, q2:0, q3:0, q6:0, q7b:0, q8:0, q8b:0 },
+    casado: null,
+    textos: {}
+  };
+
+  function goTo(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToEixo2() {
+    goTo('screen-2');
+  }
+
+  function selectBifur(tipo) {
+    state.casado = (tipo === 'casado');
+    document.querySelectorAll('.bifurcacao-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+    setTimeout(() => {
+      goTo(tipo === 'casado' ? 'screen-3a' : 'screen-3b');
+    }, 300);
+  }
+
+  function selectScale(btn, key) {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.scores[key] = parseInt(btn.textContent);
+  }
+
+  function checkTermo() {
+    const checked = document.getElementById('termo-aceite').checked;
+    const btn = document.getElementById('btn-diagnostico');
+    btn.disabled = !checked;
+    btn.style.opacity = checked ? '1' : '0.4';
+    btn.style.cursor = checked ? 'pointer' : 'not-allowed';
+  }
+
+  // PERFIS
+  const perfis = {
+    adormecido: {
+      icon: '🌑',
+      nome: 'O Adormecido',
+      desc: 'Você vive no automático. Sabe que existe algo maior dentro de você, mas o medo e o conforto têm sido mais fortes. A boa notícia: o fato de você estar aqui, respondendo essas perguntas, já é o primeiro sinal de que algo está acordando.',
+      passos: [
+        'Faça a pergunta-âncora todos os dias ao acordar: "O que estou fazendo hoje me leva ao meu propósito?"',
+        'Identifique uma pessoa de confiança para compartilhar o que você descobriu nesse diagnóstico.',
+        'Leia o livro "Da Morte Para a Vida" e conheça histórias de pessoas que estiveram onde você está.',
+        'Comece um diário de gratidão — 3 coisas por dia. Isso recalibra a perspectiva.'
+      ]
+    },
+    desperto: {
+      icon: '🌅',
+      nome: 'O Desperto',
+      desc: 'Você já teve o seu momento de ruptura — uma perda, uma crise, uma madrugada que mudou tudo. Você sabe que precisa mudar, mas ainda busca clareza de direção. Você está entre o casulo e o voo, e essa é a posição mais corajosa de todas.',
+      passos: [
+        'Documente seu momento de ruptura por escrito. Essa memória é sua bússola nos dias difíceis.',
+        'Nos próximos 30 dias, reserve 30 minutos diários com O PAPAI — antes do celular, antes do trabalho.',
+        'Identifique uma associação desalinhada na sua vida que precisa de um rompimento pacífico.',
+        'Conecte-se com a comunidade Da Morte Para a Vida para encontrar outros Despertos na jornada.'
+      ]
+    },
+    caminhante: {
+      icon: '🚶',
+      nome: 'O Caminhante',
+      desc: 'Você já tem direção e propósito identificados. A luta agora é de consistência — manter o alinhamento nos três eixos quando a pressão das circunstâncias aumenta. Você sabe quem é. Agora é sobre ser isso todos os dias.',
+      passos: [
+        'Implemente o Cronograma do Reino: Segunda (visão de legado), Quarta (filtro ético), Sexta (auditoria relacional).',
+        'Crie um ritual semanal de Shabbat — um dia sem trabalho, dedicado ao descanso e à família.',
+        'Encontre um Edificador como mentor. Quem está na frente encurta seu caminho.',
+        'Comprometa-se com uma área de serviço — igrejas, comunidades, projetos sociais. O propósito se fortalece no serviço.'
+      ]
+    },
+    edificador: {
+      icon: '🏛️',
+      nome: 'O Edificador',
+      desc: 'Você vive alinhado nos três eixos. Não é perfeito — é intencional. Você constrói legado, multiplica o que recebeu e caminha como Abrão depois da separação de Ló: com clareza profética e propósito inabalável. Agora sua missão é multiplicar.',
+      passos: [
+        'Documente sua história completa e considere fazer parte das 50 entrevistas do projeto Da Morte Para a Vida.',
+        'Identifique pelo menos um Adormecido e um Desperto ao seu redor para investir intencionalmente.',
+        'Estruture seu legado: trusts, políticas de governança familiar, ou projetos filantrópicos alinhados com seu propósito.',
+        'Junte-se à comunidade fechada dos Edificadores — líderes que constroem juntos o que nenhum constrói sozinho.'
+      ]
+    }
+  };
+
+  function gerarDiagnostico() {
+    // Calcular scores
+    const e1 = (state.scores.q1 + state.scores.q2 + state.scores.q3) / 3;
+    const e2 = state.casado
+      ? (state.scores.q6 + state.scores.q8) / 2
+      : (state.scores.q7b) || 3;
+    const e3 = 3; // textos livres — score neutro base
+    const total = (e1 + e2 + e3) / 3;
+
+    // Definir perfil
+    let perfil;
+    if (total < 2) perfil = perfis.adormecido;
+    else if (total < 3) perfil = perfis.desperto;
+    else if (total < 4.2) perfil = perfis.caminhante;
+    else perfil = perfis.edificador;
+
+    // Preencher resultado
+    document.getElementById('result-icon').textContent = perfil.icon;
+    document.getElementById('result-nome').textContent = perfil.nome;
+    document.getElementById('result-desc').textContent = perfil.desc;
+
+    // Scores visuais
+    const s1 = Math.round(e1 * 20);
+    const s2 = Math.round(e2 * 20);
+    const s3 = 60; // base
+    document.getElementById('score-1').style.width = s1 + '%';
+    document.getElementById('score-1-num').textContent = s1 + '%';
+    document.getElementById('score-2').style.width = s2 + '%';
+    document.getElementById('score-2-num').textContent = s2 + '%';
+    document.getElementById('score-3').style.width = s3 + '%';
+    document.getElementById('score-3-num').textContent = s3 + '%';
+
+    // Passos
+    const lista = document.getElementById('passos-lista');
+    lista.innerHTML = '';
+    perfil.passos.forEach((p, i) => {
+      lista.innerHTML += `
+        <div class="passo">
+          <div class="passo-num">${i+1}</div>
+          <p class="passo-texto">${p}</p>
+        </div>
+      `;
+    });
+
+    goTo('screen-6');
+  }
+
+  function compartilhar() {
+    const texto = `Acabei de descobrir meu perfil no diagnóstico "Da Morte Para a Vida" da Cordão de 3 Dobras Editora. Você também deveria fazer o seu. 🙏`;
+    if (navigator.share) {
+      navigator.share({ title: 'Da Morte Para a Vida', text: texto });
+    } else {
+      navigator.clipboard.writeText(texto).then(() => alert('Texto copiado! Cole onde quiser compartilhar.'));
+    }
+  }
+
+  function reiniciar() {
+    Object.keys(state.scores).forEach(k => state.scores[k] = 0);
+    state.casado = null;
+    document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.q-textarea').forEach(t => t.value = '');
+    document.querySelectorAll('.bifurcacao-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('termo-aceite').checked = false;
+    checkTermo();
+    goTo('screen-0');
+  }
+</script>
+</body>
+</html>
