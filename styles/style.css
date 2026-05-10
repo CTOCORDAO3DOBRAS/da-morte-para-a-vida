@@ -490,3 +490,11 @@
     .hero h1 { font-size: 38px; }
     .bifurcacao { flex-direction: column; }
   }
+
+  @media print {
+    body { background: white !important; color: black !important; }
+    .screen { display: none !important; }
+    #screen-6 { display: block !important; }
+    .btn-primary, .btn-secondary { display: none !important; }
+    .perfil-badge, .eixos-grid, .proximos-passos { display: block !important; }
+  }

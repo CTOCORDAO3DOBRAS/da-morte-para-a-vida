@@ -178,13 +178,34 @@
     goTo('screen-6');
   }
 
+  function getShareText() {
+    const perfil = document.getElementById('result-nome').textContent;
+    return `🙏 Acabei de descobrir que meu perfil é "${perfil}" no diagnóstico "Da Morte Para a Vida".\n\nEsse diagnóstico me fez perguntas que ninguém nunca tinha me feito — sobre meu relacionamento com O PAPAI, com meu cônjuge e sobre o meu verdadeiro propósito de vida.\n\nNão é sobre dinheiro ou posses. É sobre como e para quê você vive.\n\n"Ainda há tempo para mim e para você."\n— Daniel de Mattos\n\n👉 Faça o seu diagnóstico gratuito:\nhttps://damorteparaavida.cordao3dobras.com\n\n#DaMortePAraAVida #Proposito #CordaoDe3Dobras`;
+  }
+
   function compartilhar() {
-    const texto = `Acabei de descobrir meu perfil no diagnóstico "Da Morte Para a Vida" da Cordão de 3 Dobras Editora. Você também deveria fazer o seu. 🙏`;
+    const texto = getShareText();
+    
     if (navigator.share) {
-      navigator.share({ title: 'Da Morte Para a Vida', text: texto });
+      navigator.share({ 
+        title: 'Da Morte Para a Vida — Meu Diagnóstico', 
+        text: texto,
+        url: 'https://damorteparaavida.cordao3dobras.com'
+      });
     } else {
       navigator.clipboard.writeText(texto).then(() => alert('Texto copiado! Cole onde quiser compartilhar.'));
     }
+  }
+
+  function compartilharWhatsApp() {
+    const texto = getShareText();
+    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+  }
+
+  function compartilharEmail() {
+    const texto = getShareText();
+    const subject = 'Da Morte Para a Vida — Meu Diagnóstico';
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(texto)}`;
   }
 
   function reiniciar() {
