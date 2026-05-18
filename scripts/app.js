@@ -255,10 +255,10 @@
       </div>
       
       <div style="text-align: center; margin-bottom: 40px; padding: 40px; background: rgba(201, 168, 76, 0.05); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px;">
-        <div style="font-size: 70px; margin-bottom: 15px;">\${icon}</div>
+        <div style="font-size: 70px; margin-bottom: 15px;">${icon}</div>
         <p style="font-size: 14px; color: #c9a84c; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Seu perfil é</p>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #f5f0e8; margin: 0 0 20px 0;">\${nome}</h2>
-        <p style="font-size: 18px; line-height: 1.6; color: rgba(245,240,232,0.9); margin: 0;">\${desc}</p>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #f5f0e8; margin: 0 0 20px 0;">${nome}</h2>
+        <p style="font-size: 18px; line-height: 1.6; color: rgba(245,240,232,0.9); margin: 0;">${desc}</p>
       </div>
 
       <div style="margin-bottom: 40px; padding: 0 20px;">
@@ -267,30 +267,30 @@
         <div style="margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 16px; font-weight: 500;">O Papai</span>
-            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s1}</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">${s1}</span>
           </div>
           <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
-            <div style="height: 100%; width: \${s1}; background: #c9a84c;"></div>
+            <div style="height: 100%; width: ${s1}; background: #c9a84c;"></div>
           </div>
         </div>
         
         <div style="margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 16px; font-weight: 500;">Aliança</span>
-            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s2}</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">${s2}</span>
           </div>
           <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
-            <div style="height: 100%; width: \${s2}; background: #c9a84c;"></div>
+            <div style="height: 100%; width: ${s2}; background: #c9a84c;"></div>
           </div>
         </div>
         
         <div style="margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 16px; font-weight: 500;">Propósito</span>
-            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s3}</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">${s3}</span>
           </div>
           <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
-            <div style="height: 100%; width: \${s3}; background: #c9a84c;"></div>
+            <div style="height: 100%; width: ${s3}; background: #c9a84c;"></div>
           </div>
         </div>
       </div>
@@ -298,7 +298,7 @@
       <div style="margin-bottom: 40px; padding: 0 20px;">
         <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #c9a84c; margin-bottom: 25px; text-align: center;">Seus próximos passos</h3>
         <div style="font-size: 16px; line-height: 1.6;">
-          \${passosHTML}
+          ${passosHTML}
         </div>
       </div>
       
