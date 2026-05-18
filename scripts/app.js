@@ -313,11 +313,11 @@
     
     // Adicionar estilos locais para renderizar corretamente a lista de passos
     const styleEl = document.createElement('style');
-    styleEl.textContent = \`
+    styleEl.textContent = `
       .passo { display: flex; align-items: flex-start; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid #c9a84c; }
       .passo-num { background: #c9a84c; color: #0d1b2e; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 20px; flex-shrink: 0; }
       .passo-texto { margin: 0; color: #f5f0e8; font-size: 16px; line-height: 1.6; }
-    \`;
+    `;
     container.appendChild(styleEl);
 
     document.body.appendChild(container);
