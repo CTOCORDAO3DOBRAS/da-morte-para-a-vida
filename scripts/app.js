@@ -219,3 +219,150 @@
     checkTermo();
     goTo('screen-0');
   }
+
+  async function baixarPDF() {
+    // Pegar as referências das bibliotecas
+    const { jsPDF } = window.jspdf;
+    
+    // Criar um container temporário para renderizar o PDF
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+    container.style.top = '-9999px';
+    container.style.width = '800px';
+    container.style.backgroundColor = '#0d1b2e';
+    container.style.color = '#f5f0e8';
+    container.style.padding = '60px';
+    container.style.fontFamily = "'Montserrat', sans-serif";
+    container.style.boxSizing = 'border-box';
+    
+    // Obter os dados da tela
+    const nome = document.getElementById('result-nome').textContent;
+    const icon = document.getElementById('result-icon').textContent;
+    const desc = document.getElementById('result-desc').textContent;
+    
+    const s1 = document.getElementById('score-1').style.width;
+    const s2 = document.getElementById('score-2').style.width;
+    const s3 = document.getElementById('score-3').style.width;
+    
+    const passosHTML = document.getElementById('passos-lista').innerHTML;
+
+    // Montar o HTML do PDF com a identidade visual
+    container.innerHTML = `
+      <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #c9a84c; margin: 0;">Da Morte Para a Vida</h1>
+        <p style="font-size: 14px; color: rgba(201,168,76,0.8); margin-top: 5px; text-transform: uppercase; letter-spacing: 2px;">Cordão de 3 Dobras Editora</p>
+      </div>
+      
+      <div style="text-align: center; margin-bottom: 40px; padding: 40px; background: rgba(201, 168, 76, 0.05); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px;">
+        <div style="font-size: 70px; margin-bottom: 15px;">\${icon}</div>
+        <p style="font-size: 14px; color: #c9a84c; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Seu perfil é</p>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #f5f0e8; margin: 0 0 20px 0;">\${nome}</h2>
+        <p style="font-size: 18px; line-height: 1.6; color: rgba(245,240,232,0.9); margin: 0;">\${desc}</p>
+      </div>
+
+      <div style="margin-bottom: 40px; padding: 0 20px;">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #c9a84c; margin-bottom: 25px; text-align: center;">Seu Alinhamento</h3>
+        
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 16px; font-weight: 500;">O Papai</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s1}</span>
+          </div>
+          <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
+            <div style="height: 100%; width: \${s1}; background: #c9a84c;"></div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 16px; font-weight: 500;">Aliança</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s2}</span>
+          </div>
+          <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
+            <div style="height: 100%; width: \${s2}; background: #c9a84c;"></div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 16px; font-weight: 500;">Propósito</span>
+            <span style="font-size: 16px; color: #c9a84c; font-weight: bold;">\${s3}</span>
+          </div>
+          <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
+            <div style="height: 100%; width: \${s3}; background: #c9a84c;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 40px; padding: 0 20px;">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #c9a84c; margin-bottom: 25px; text-align: center;">Seus próximos passos</h3>
+        <div style="font-size: 16px; line-height: 1.6;">
+          \${passosHTML}
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(201, 168, 76, 0.2);">
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; color: #c9a84c; margin-bottom: 10px;">"O milagre começa quando as desculpas terminam!"</p>
+        <p style="font-size: 14px; color: rgba(245,240,232,0.6); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px;">— Daniel de Mattos</p>
+        
+        <p style="font-size: 16px; color: #f5f0e8; margin-bottom: 5px;"><strong>Cordão de 3 Dobras Editora</strong></p>
+        <p style="font-size: 15px; color: #c9a84c;">damorteparaavida.cordao3dobras.com</p>
+      </div>
+    `;
+    
+    // Adicionar estilos locais para renderizar corretamente a lista de passos
+    const styleEl = document.createElement('style');
+    styleEl.textContent = \`
+      .passo { display: flex; align-items: flex-start; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid #c9a84c; }
+      .passo-num { background: #c9a84c; color: #0d1b2e; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 20px; flex-shrink: 0; }
+      .passo-texto { margin: 0; color: #f5f0e8; font-size: 16px; line-height: 1.6; }
+    \`;
+    container.appendChild(styleEl);
+
+    document.body.appendChild(container);
+
+    // Mudar o texto do botão para indicar carregamento
+    const btn = event.currentTarget;
+    const btnTextoOriginal = btn.innerHTML;
+    btn.innerHTML = 'Gerando PDF... Aguarde';
+    btn.disabled = true;
+
+    try {
+      // Usar html2canvas para desenhar o container num canvas
+      const canvas = await html2canvas(container, {
+        scale: 2, // Melhor resolução
+        backgroundColor: '#0d1b2e',
+        logging: false,
+        useCORS: true
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      
+      // Criar o PDF no formato A4 retrato
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      // Se a altura passar de uma página (o que é bem provável no A4), pode dividir ou deixar estendido
+      // O jsPDF com a imagem cuidará do ratio, mas para caber na página sem cortar, usamos a altura proporcional
+      // Se a imagem for muito alta, vamos precisar dividi-la ou o PDF criará nova página se configurado.
+      // Para manter simples, adicionamos a imagem (vai preencher e talvez sobrar, mas costuma caber em 1 pág).
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('meu-perfil-da-morte-para-a-vida.pdf');
+      
+    } catch (err) {
+      console.error('Erro ao gerar PDF:', err);
+      alert('Houve um erro ao gerar o PDF. Tente novamente.');
+    } finally {
+      // Limpar DOM
+      document.body.removeChild(container);
+      btn.innerHTML = btnTextoOriginal;
+      btn.disabled = false;
+    }
+  }
