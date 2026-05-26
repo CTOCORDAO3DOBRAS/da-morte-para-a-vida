@@ -1,0 +1,66 @@
+# ==============================================================================
+# .cursorignore — Barreira para indexadores de IA (Cursor, Copilot, etc.)
+#
+# Impede que o contexto do editor envie estes arquivos para servidores
+# externos de inferência ou treinamento de modelos de linguagem.
+# Sintaxe idêntica ao .gitignore.
+# ==============================================================================
+
+
+# --- CREDENCIAIS E SEGREDOS (prioridade máxima) ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cert
+secrets/
+credentials/
+service-account*.json
+*-service-account.json
+memory.md
+
+
+# --- DADOS DE LEADS E HISTÓRICO DE CHAT ---
+# Contém PII (nomes, telefones) e histórico de negociação sensível
+memory.md
+leads_export*.csv
+leads_export*.json
+chat_export*.json
+*.dump
+
+
+# --- DEPENDÊNCIAS VOLUMOSAS (sem valor para indexação) ---
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+
+# --- BUILD E ARTEFATOS ---
+dist/
+build/
+.cache/
+.parcel-cache/
+*.min.js
+*.min.css
+
+
+# --- LOGS ---
+*.log
+logs/
+
+
+# --- BANCO DE DADOS LOCAL ---
+*.sqlite
+*.db
+
+
+# --- CONFIGS DE PLATAFORMA ---
+.vercel/
+.netlify/
