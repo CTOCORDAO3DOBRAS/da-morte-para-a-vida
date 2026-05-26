@@ -345,8 +345,18 @@ if __name__ == "__main__":
         simular_dry_run(PAYLOAD_DANIEL_EXEMPLO, contexto="sdr")
     elif "--simular" in args:
         print("\n[SIMULAÇÃO] Processando payload do lead Daniel...\n")
-        resultado = sincronizar(PAYLOAD_DANIEL_EXEMPLO, contexto="sdr")
-        print(json.dumps(resultado, indent=2, ensure_ascii=False))
+        try:
+            resultado = sincronizar(PAYLOAD_DANIEL_EXEMPLO, contexto="sdr")
+            print(json.dumps(resultado, indent=2, ensure_ascii=False))
+        except Exception as exc:
+            causa = str(exc)
+            if "Name or service not known" in causa or "ConnectError" in type(exc).__name__:
+                print("[ERRO DE REDE] Sem acesso ao Supabase neste ambiente.")
+                print(f"  Detalhe: {type(exc).__name__} — {causa[:80]}")
+                print("\nFallback automático → executando dry-run local:\n")
+                simular_dry_run(PAYLOAD_DANIEL_EXEMPLO, contexto="sdr")
+            else:
+                raise
     else:
         print("Servidor CRM Sync rodando em http://localhost:5000")
         print("Endpoint webhook: POST /webhook/zapi")
