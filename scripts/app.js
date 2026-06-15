@@ -366,3 +366,24 @@
       btn.disabled = false;
     }
   }
+/* ──────────────────────────────
+   INTEGRAÇÃO ALCATEIA DE LEÕES
+────────────────────────────── */
+function irParaAlcateia() {
+  var perfil = document.getElementById('result-nome')
+    ? document.getElementById('result-nome').textContent.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace('o ', '').trim()
+    : '';
+
+  var mapa = {
+    'desperto':    'desperto',
+    'adormecido':  'adormecido',
+    'caminhante':  'caminhante',
+    'edificador':  'edificador'
+  };
+
+  var perfilFinal = mapa[perfil] || '';
+  var url = 'https://alcateiadeleoes.com.br/?origem=damorteparaavida&perfil=' + perfilFinal;
+  window.open(url, '_blank');
+}
