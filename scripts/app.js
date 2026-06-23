@@ -384,6 +384,6 @@ function irParaAlcateia() {
   };
 
   var perfilFinal = mapa[perfil] || '';
-  var url = 'https://alcateiadeleoes.com.br/?origem=damorteparaavida&perfil=' + perfilFinal;
+  var url = 'https://www.alcateiadeleoes.com.br/?origem=damorteparaavida&perfil=' + perfilFinal;
   window.open(url, '_blank');
 }
